@@ -213,7 +213,7 @@ var Engine = (function(global) {
 		'images/char-princess-girl.png',
 		'images/Rock.png',
 		'images/Tree Short.png',
-		'images/Door Tall Closed.png'
+		'images/Door.png'
 		
 	
 		

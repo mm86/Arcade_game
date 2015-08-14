@@ -97,6 +97,8 @@ Player.prototype.update = function(dt) {
 // Draw the player on the screen, required method for game
 Player.prototype.render = function() {
     
+	
+	ctx.drawImage(Resources.get("images/Door.png"), 0, 50);
 	if (life.number >0){
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 	ctx.font = '18px Georgia';
