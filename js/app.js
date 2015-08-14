@@ -80,6 +80,8 @@ Player.prototype.update = function(dt) {
 	}
 	
 	
+	
+	
 	//gameover when hit the water
 	
         if(player.y === -18) {
@@ -109,6 +111,12 @@ Player.prototype.render = function() {
 	  
 	}
 	
+	//When player acquires the last gem(and score is 3 cause all gems must be acquired), add the image of key to the player image
+	
+	if(this.score === 3)
+	{
+	 ctx.drawImage(Resources.get("images/Key-Small.png"), this.x+30, this.y+90);
+	}
 	
 }
 
