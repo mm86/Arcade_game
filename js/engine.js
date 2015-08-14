@@ -211,6 +211,10 @@ var Engine = (function(global) {
 		'images/char-pink-girl.png',
 		'images/char-horn-girl.png',
 		'images/char-princess-girl.png',
+		'images/Rock.png',
+		'images/Tree Short.png',
+		'images/Door Tall Closed.png'
+		
 	
 		
     ]);
