@@ -49,6 +49,9 @@ var Player = function() {
 	this.y = 397;
 	
 	this.score = 0;
+	this.doorX = [0,100,200,300,400][Math.floor(Math.random() * 5)];
+	this.doorY = -18;
+	
 	
 	
 }
@@ -79,15 +82,12 @@ Player.prototype.update = function(dt) {
 	  
 	}
 	
+	if((player.x === this.doorX && player.y === this.doorY) && (this.score === 3) ){
+	player.reset();
+	}
 	
 	
 	
-	//gameover when hit the water
-	
-        if(player.y === -18) {
-         
-           player.reset();
-        }
 		
      
 	
@@ -98,7 +98,7 @@ Player.prototype.update = function(dt) {
 Player.prototype.render = function() {
     
 	
-	ctx.drawImage(Resources.get("images/Door.png"), 0, 50);
+	ctx.drawImage(Resources.get("images/Door Tall Closed.png"), this.doorX, this.doorY);
 	if (life.number >0){
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 	ctx.font = '18px Georgia';
@@ -185,10 +185,25 @@ Life.prototype.die = function () {
 	
 	}
 	
+}
+
 	
-	
+//Level class to track levels
+var Level = function() {
+    
+    this.level = 0;
 	
 }
+
+//Print the level number here
+Level.prototype.render = function() {
+   
+    
+	ctx.font = '18px Georgia';
+    ctx.fillText('Level: ' + this.level, 200, 30); 
+   
+}
+	
 
 
 //Prize class for finished projects, gems etc
@@ -261,6 +276,7 @@ var allEnemies = [enemy1, enemy2, enemy3];
 var player = new Player();
 var life = new Life();
 var prize = new Prize();
+var level = new Level();
 
 
 
