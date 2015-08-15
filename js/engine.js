@@ -179,6 +179,7 @@ var Engine = (function(global) {
         player.render();
 		life.render();
 		prize.render();
+		level.render();
 	
     }
 
@@ -213,7 +214,8 @@ var Engine = (function(global) {
 		'images/char-princess-girl.png',
 		'images/Rock.png',
 		'images/Tree Short.png',
-		'images/Door.png'
+		'images/Door.png',
+		'images/Door Tall Closed.png'
 		
 	
 		
