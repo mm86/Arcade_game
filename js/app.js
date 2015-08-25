@@ -166,33 +166,37 @@ Player.prototype.handleInput = function(key) {
     }
 };
 
-
-//Life class to track number of hearts
+//Life class. Displays and tracks number of hearts/lives
 var Life = function() {
-    
-    this.number = 3;
-}
 
-//draws the hearts for each life.
+    this.number = LIFE_NUMBER;
+};
+
+//Draw the 3 hearts
 Life.prototype.render = function() {
-   
-    for(x = 0; x < this.number; x++) {
-        ctx.drawImage(Resources.get('images/Heart.png'), x * 45, 5, 50, 50);
-        
-    }
-   
-}
 
-Life.prototype.die = function () {
-    
-	if(this.number > 0) {
-	
-	this.number--;
-	player.reset();
-	
-	}
-	
-}
+    for (x = 0; x < this.number; x++) {
+        ctx.drawImage(Resources.get('images/Heart.png'), x * 45, 0, 50, 50);
+    }
+
+};
+
+/*
+Decrease heart/life number every time the player collides 
+with an enemy bug or reaches the row with water blocks
+
+*/
+
+Life.prototype.die = function() {
+
+
+    if (this.number > 0) {
+        this.number--;
+        player.reset();
+    }
+};
+
+
 
 //Prize class for finished projects, gems etc
 
