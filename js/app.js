@@ -298,6 +298,7 @@ var allPrizes = [html, css, ajax, js, opt, objects, star];
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
+        32: 'spacebar',
         37: 'left',
         38: 'up',
         39: 'right',
