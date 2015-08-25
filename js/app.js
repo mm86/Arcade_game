@@ -67,7 +67,6 @@ var Player = function() {
 
     this.x = PLAYER_X;
     this.y = PLAYER_Y;
-    this.sprite = 'images/char-boy.png';
     this.score = 0;
     this.tab = 0;
 
@@ -76,6 +75,7 @@ var Player = function() {
 
 Player.prototype.update = function(dt) {
 
+    this.sprite = window.myAvatar;
     //When the player and enemy-bugs collide, the player is reset and a life is lost
     for (i in allEnemies) {
         if ((this.x < allEnemies[i].x + 50 && this.y < allEnemies[i].y + 50) && (this.x + 50 > allEnemies[i].x && this.y + 50 > allEnemies[i].y)) {
