@@ -11,41 +11,52 @@ var X_OFFSET = 15,
     ENEMY_X_REVERSE = 700,
     LIFE_NUMBER = 3;
 
-// Enemies our player must avoid
+/* Define Enemy class. All instances of the enemy class will acquire the 
+   variables declared within the class.
+*/
 var Enemy = function() {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
 
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-	
-	//set the speed and locations for the bugs
-	this.x = -101;  
-    this.y = [65,148,231][Math.floor(Math.random() * 3)];
-	//speed will increment as the player reaches higher levels to make the game more challenging
+    this.x = ENEMY_X_FORWARD;
+    this.y = Y_ARRAY[Math.floor(Math.random() * 4)];
     this.speed = (Math.floor(Math.random() * 2) + 1) * 100;
-}
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
+};
+
+/*
+  This method displays the bugs and their movement across the game canvas
+  @param {number} dt : Time delta for smooth animation and movement of bugs
+*/
 Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-	this.x += this.speed*dt;
-    //restart the bug movement once they go beyond the width of the canvas
-    if(this.x > 500) { 
-		this.x = -101;       
-        this.y = [65,148,231][Math.floor(Math.random() * 3)];
 
+    this.x += this.speed * dt;
+
+    /*Once the bugs cross a particular threshold(x-coord > 705), 
+	  replace their image and reverse their direction of movement.
+	*/
+    if (this.x > 705) {
+
+        this.sprite = 'images/enemy-bug-left.png';
+        this.x = ENEMY_X_REVERSE;
+        this.speed = -(Math.floor(Math.random() * 2) + 1) * 100;
+
+    } else if (this.x < 100) {
+
+        this.sprite = 'images/enemy-bug.png';
+        this.x = ENEMY_X_FORWARD;
+        this.speed = (Math.floor(Math.random() * 2) + 1) * 100;
+        this.x += this.speed * dt;
+        this.y = Y_ARRAY[Math.floor(Math.random() * 4)];
     }
-}
 
-// Draw the enemy on the screen, required method for game
+};
+
+// Draw the enemy on the screen
 Enemy.prototype.render = function() {
+
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+
+};
 
 // Now write your own player class
 // This class requires an update(), render() and
