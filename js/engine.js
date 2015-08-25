@@ -203,7 +203,9 @@ var Engine = (function(global) {
 
         player.render();
 		life.render();
-		prize.render();
+		allPrizes.forEach(function(prize) {
+            prize.render();
+        });
 		
 	
     }
