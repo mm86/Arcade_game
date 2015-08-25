@@ -198,63 +198,49 @@ Life.prototype.die = function() {
 
 
 
-//Prize class for finished projects, gems etc
+/*
+  Prize class. This class displays the prizes and 
+  keeps tab on the score achieved by the player.
+  @param {image} image: Image of the prize
+  @param {number} x: X Coordinate of the prize
+  @param {number} y: Y Coordinate of the prize
+*/
+var Prize = function(image, x, y) {
 
-var Prize = function() {
-  
-    this.GreenX = [0,100,200,300,400][Math.floor(Math.random() * 5)];
-	this.GreenY = 65;
-	
-	
-	this.BlueX = [0,100,200,300,400][Math.floor(Math.random() * 5)];
-	this.BlueY = 148; 
- 
-    this.OrangeX = [0,100,200,300,400][Math.floor(Math.random() * 5)];
-	this.OrangeY = 231; 
+    this.sprite = image;
+    this.x = x;
+    this.y = y;
 
-    
+};
 
-}
-
-
+//Draw the prizes on the canvas
 Prize.prototype.render = function() {
- 
 
-    ctx.drawImage(Resources.get('images/Gem Green.png'), this.GreenX, this.GreenY);
-	ctx.drawImage(Resources.get('images/Gem Blue.png'), this.BlueX, this.BlueY);
-	ctx.drawImage(Resources.get('images/Gem Orange.png'), this.OrangeX, this.OrangeY);
-   
-}
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
-Prize.prototype.die = function(x,y) {
- 
+};
 
-	if (x===this.OrangeX && y===this.OrangeY){
-	this.OrangeX = -101;
-	this.OrangeY = -101;
-	player.score++;
-	player.tab++;
 
-	}
-	else if(x===this.GreenX && y===this.GreenY){
-	this.GreenX = -101;
-	this.GreenY = -101;
-	player.score++;
-	player.tab++;
-	
-	}
-	else{
-	this.BlueX = -101;
-	this.BlueY = -101;
-	player.score++;
-	player.tab++;
+/* When player collects each gift/prize, vanish the image of the prize
+   by setting it's coordinates to -101, increase the score and the tab.
+*/
+Prize.prototype.gatherPrize = function(playerX, playerY) {
+
+    /*
+	The offset values are used to adjust the image of the prizes in accordance
+	with the dimensions of the player image as both the image's height and
+	width vary.
+	*/
+    if (((playerX + X_OFFSET) === this.x) && ((playerY + Y_OFFSET) === this.y)) {
+        this.x = HIDE;
+        this.y = HIDE;
+        player.score++;
+        player.tab++;
 
     }
-	
-	
-	
-	
-}
+
+};
+
 
 
 
