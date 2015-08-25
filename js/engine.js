@@ -29,7 +29,7 @@ var Engine = (function(global) {
 
     canvas.width = 505;
     canvas.height = 606;
-        document.getElementById('game').appendChild(canvas);
+    document.getElementById('game').appendChild(canvas);
   
 		
 		
@@ -179,7 +179,7 @@ var Engine = (function(global) {
         player.render();
 		life.render();
 		prize.render();
-		level.render();
+		
 	
     }
 

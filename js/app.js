@@ -47,8 +47,9 @@ var Player = function() {
     
 	this.x = 0;
 	this.y = 397;
-	
+	this.level=0;
 	this.score = 0;
+    this.tab = 0;
 	this.doorX = [0,100,200,300,400][Math.floor(Math.random() * 5)];
 	this.doorY = -18;
 	
@@ -80,18 +81,12 @@ Player.prototype.update = function(dt) {
 	  
 	  prize.die(player.x,player.y);
 	  
+	  
 	}
-	
-	if((player.x === this.doorX && player.y === this.doorY) && (this.score === 3) ){
-	player.reset();
-	}
+
 	
 	
-	
-		
-     
-	
-	
+
 }
 
 // Draw the player on the screen, required method for game
@@ -102,7 +97,7 @@ Player.prototype.render = function() {
 	if (life.number >0){
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 	ctx.font = '18px Georgia';
-    ctx.fillText('Score: ' + this.score, 300, 30);
+    ctx.fillText('Level: ' + this.level + '  Score: ' + this.score, 300, 30);
 	}
 	else if(life.number <= 0){
 	
@@ -114,16 +109,29 @@ Player.prototype.render = function() {
 	}
 	
 	//When player acquires the last gem(and score is 3 cause all gems must be acquired), add the image of key to the player image
+	if(this.tab === 3){
+	ctx.drawImage(Resources.get("images/Key-Small.png"), this.x+30, this.y+90);
 	
-	if(this.score === 3)
-	{
-	 ctx.drawImage(Resources.get("images/Key-Small.png"), this.x+30, this.y+90);
+
+	
 	}
+	
+	if(this.tab === 3 && (player.x === this.doorX && player.y === this.doorY)){
+	this.x = 0;
+	this.y = 397;
+	this.level++;
+	ctx.drawImage(Resources.get("images/Key-Small.png"), -101, -101);
+	
+    this.tab=0;
+	
+	}	
+	
+
 	
 }
 
 Player.prototype.reset = function() {
-    
+
 	this.x = 0;
 	this.y = 397;
 	
@@ -187,30 +195,10 @@ Life.prototype.die = function () {
 	
 }
 
-	
-//Level class to track levels
-var Level = function() {
-    
-    this.level = 0;
-	
-}
-
-//Print the level number here
-Level.prototype.render = function() {
-   
-    
-	ctx.font = '18px Georgia';
-    ctx.fillText('Level: ' + this.level, 200, 30); 
-   
-}
-	
-
-
 //Prize class for finished projects, gems etc
 
-
 var Prize = function() {
-    
+  
     this.GreenX = [0,100,200,300,400][Math.floor(Math.random() * 5)];
 	this.GreenY = 65;
 	
@@ -220,44 +208,50 @@ var Prize = function() {
  
     this.OrangeX = [0,100,200,300,400][Math.floor(Math.random() * 5)];
 	this.OrangeY = 231; 
-	this.destroyed = false;
+
+    
 
 }
 
 
 Prize.prototype.render = function() {
-   
-   
+ 
+
     ctx.drawImage(Resources.get('images/Gem Green.png'), this.GreenX, this.GreenY);
 	ctx.drawImage(Resources.get('images/Gem Blue.png'), this.BlueX, this.BlueY);
 	ctx.drawImage(Resources.get('images/Gem Orange.png'), this.OrangeX, this.OrangeY);
-	
-        
-    
    
 }
 
 Prize.prototype.die = function(x,y) {
+ 
 
-    this.destroyed = true;
-	
 	if (x===this.OrangeX && y===this.OrangeY){
 	this.OrangeX = -101;
 	this.OrangeY = -101;
 	player.score++;
+	player.tab++;
+
 	}
 	else if(x===this.GreenX && y===this.GreenY){
 	this.GreenX = -101;
 	this.GreenY = -101;
 	player.score++;
+	player.tab++;
+	
 	}
 	else{
 	this.BlueX = -101;
 	this.BlueY = -101;
 	player.score++;
-    }
-}
+	player.tab++;
 
+    }
+	
+	
+	
+	
+}
 
 
 
@@ -276,7 +270,7 @@ var allEnemies = [enemy1, enemy2, enemy3];
 var player = new Player();
 var life = new Life();
 var prize = new Prize();
-var level = new Level();
+
 
 
 
