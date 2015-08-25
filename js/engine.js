@@ -27,7 +27,7 @@ var Engine = (function(global) {
 		myAvatar;
 		
 
-    canvas.width = 505;
+    canvas.width = 905;
     canvas.height = 606;
     document.getElementById('game').appendChild(canvas);
   
@@ -69,7 +69,7 @@ var Engine = (function(global) {
      * game loop.
      */
    
-    function init() {
+     function init() {
 	
 	
         reset();
