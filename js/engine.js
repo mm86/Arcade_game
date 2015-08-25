@@ -129,17 +129,29 @@ var Engine = (function(global) {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
+		 
+	    /* If the player collects all the prizes and reaches the door,
+		   then he has successfully completed the game. 
+		   Display the congrats message
+		*/
+		 if(player.score === 7 && (player.x === 400 && player.y === -25)){
+		     gameFinish();
+         }	
+         
+		else if(life.number > 0)  {
+      
         var rowImages = [
                 'images/water-block.png',   // Top row is water
                 'images/stone-block.png',   // Row 1 of 3 of stone
                 'images/stone-block.png',   // Row 2 of 3 of stone
                 'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/grass-block.png',   // Row 1 of 2 of grass
+                'images/stone-block.png',   // Row 1 of 2 of grass
                 'images/grass-block.png'    // Row 2 of 2 of grass
             ],
             numRows = 6,
-            numCols = 5,
+            numCols = 9,
             row, col;
+		
 
         /* Loop through the number of rows and columns we've defined above
          * and, using the rowImages array, draw the correct image for that
@@ -155,15 +167,28 @@ var Engine = (function(global) {
                  * we're using them over and over.
                  */
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+				
             }
         }
+		ctx.drawImage(Resources.get("images/Door Tall Closed.png"), 4 * 101, 0 * 83);
 
-        ctx.clearRect(0, 0, 600, 45);
 	
-	
+	   for (row = 1; row < numRows-1; row++) {
+      
+        ctx.drawImage(Resources.get("images/Tree Short.png"), 0 * 101, row * 83);
+		ctx.drawImage(Resources.get("images/Tree Short.png"), 8 * 101, row * 83);
+		}
+		
+        ctx.clearRect(0, 0, 400, 45);
+		ctx.clearRect(600, 0, 400, 45);
         renderEntities();
+		}
+		
+		else if (life.number === 0){
+		gameOver();
+		}
+	
     }
-
     /* This function is called by the render function and is called on each game
      * tick. It's purpose is to then call the render functions you have defined
      * on your enemy and player entities within app.js
@@ -215,7 +240,14 @@ var Engine = (function(global) {
 		'images/Rock.png',
 		'images/Tree Short.png',
 		'images/Door.png',
-		'images/Door Tall Closed.png'
+		'images/Door Tall Closed.png',
+		'images/html.png',
+		'images/css.png',
+		'images/js.png',
+		'images/optimization.png',
+		'images/objects.png',
+		'images/ajax.png',
+		'images/enemy-bug-left.png'
 		
 	
 		
