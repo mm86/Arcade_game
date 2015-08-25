@@ -1,3 +1,16 @@
+//Declare all variables that are going to be constant and hence, immutable.
+var X_OFFSET = 15,
+    Y_OFFSET = 83,
+    PRIZE_X_ARRAY = [115, 215, 315, 415, 615, 715, 815],
+    HIDE = -101,
+    Y_ARRAY = [65, 148, 231, 314],
+    PLAYER_X = 400,
+    PLAYER_Y = 390,
+    WATER_ARRAY = [-100, 0, 100, 200, 300, 500, 600, 700, 800],
+    ENEMY_X_FORWARD = 115,
+    ENEMY_X_REVERSE = 700,
+    LIFE_NUMBER = 3;
+
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
