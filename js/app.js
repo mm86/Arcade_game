@@ -242,6 +242,30 @@ Prize.prototype.gatherPrize = function(playerX, playerY) {
 };
 
 
+//Function to end the game when the number of hearts is 0.
+var gameOver = function() {
+    ctx.clearRect(0, 0, ctx.width, ctx.height);
+    ctx.font = 'Bold 35px Verdana';
+    ctx.fillStyle = '#000000';
+    ctx.fillText('Game Over :(', 100, 250);
+    ctx.font = 'Bold 35px Verdana';
+    ctx.fillText('Score: 0', 100, 350);
+	ctx.fillText('Press space to play again',100,450);
+};
+
+//Function to finish the game and display congrats message
+var gameFinish = function() {
+    ctx.clearRect(0, 0, ctx.width, ctx.height);
+    ctx.font = 'Bold 30px Verdana';
+    ctx.fillStyle = '#000000';
+    ctx.fillText('Congrats, You are now a front end ninja', 100, 250);
+    ctx.font = 'Bold 30px Verdana';
+    ctx.fillText('Score: 0' + player.score, 100, 350);
+	ctx.fillText('Press space to play again',100,450);
+
+};
+
+
 
 
 
