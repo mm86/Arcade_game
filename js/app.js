@@ -267,23 +267,30 @@ var gameFinish = function() {
 
 
 
-
-
-
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
-
+//Instantiate player, enemy, life and prizes objects
 
 var enemy1 = new Enemy();
 var enemy2 = new Enemy();
 var enemy3 = new Enemy();
+var enemy4 = new Enemy();
+var allEnemies = [enemy1, enemy2, enemy3, enemy4];
 
-var allEnemies = [enemy1, enemy2, enemy3];
 var player = new Player();
 var life = new Life();
-var prize = new Prize();
 
+/*Instantiate objects of the Prize class.
+  @param {image} Image of the prize
+  @param {number} x : x-coordinate of the prize
+  @param {number} y : y-coordinate of the prize
+*/
+var html = new Prize('images/html.png', 215, 141);
+var css = new Prize('images/css.png', 315, 224);
+var ajax = new Prize('images/ajax.png', 515, 224);
+var js = new Prize('images/js.png', 215, 307);
+var opt = new Prize('images/optimization.png', 415, 307);
+var objects = new Prize('images/objects.png', 615, 390);
+var star = new Prize('images/Star.png', 715, 390);
+var allPrizes = [html, css, ajax, js, opt, objects, star];
 
 
 
