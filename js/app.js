@@ -58,138 +58,113 @@ Enemy.prototype.render = function() {
 
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+/* 
+Define Player class. All instances of this class will acquire the variables
+declared in this class.
+*/
+
 var Player = function() {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
 
-    // The image/sprite for our player, this uses
-    // a helper we've provided to easily load images
-	
-    
-	this.x = 0;
-	this.y = 397;
-	this.level=0;
-	this.score = 0;
+    this.x = PLAYER_X;
+    this.y = PLAYER_Y;
+    this.sprite = 'images/char-boy.png';
+    this.score = 0;
     this.tab = 0;
-	this.doorX = [0,100,200,300,400][Math.floor(Math.random() * 5)];
-	this.doorY = -18;
-	
-	
-	
-}
 
-// Update the players position, required method for game
-// Parameter: dt, a time delta between ticks
+
+};
+
 Player.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-	
-	
-	this.sprite = window.myAvatar;
-	
-	//check for collision with enemies
-    for(i in allEnemies) {
-        if((player.x - allEnemies[i].x < 50 && player.y - allEnemies[i].y < 50) && (player.x - allEnemies[i].x > - 40 && player.y - allEnemies[i].y > - 40)) {
-            life.die();                                 
+
+    //When the player and enemy-bugs collide, the player is reset and a life is lost
+    for (i in allEnemies) {
+        if ((this.x < allEnemies[i].x + 50 && this.y < allEnemies[i].y + 50) && (this.x + 50 > allEnemies[i].x && this.y + 50 > allEnemies[i].y)) {
+            life.die();
+            player.reset();
         }
     }
-	
-	//check for acquring gems and projects
-	
-	if((player.x === prize.OrangeX && player.y === prize.OrangeY)||(player.x === prize.GreenX && player.y === prize.GreenY)||(player.x === prize.BlueX && player.y === prize.BlueY)){
-	
-	  
-	  prize.die(player.x,player.y);
-	  
-	  
-	}
 
-	
-	
 
-}
+    /*
+	When the player collects a gift/prize, call function gatherPrize.
+    @param {number} this.x: X Coordinate of player.
+	@param {number} this.y: Y Coordinate of player.
+	*/
+    allPrizes.forEach(function(prize) {
+        prize.gatherPrize(player.x, player.y);
+    });
 
-// Draw the player on the screen, required method for game
+    //When the player object reaches the row filled with water, a life is lost and the player is reset
+    if ((WATER_ARRAY.indexOf(this.x) > 0) && (this.y === -25)) {
+
+        life.die();
+        player.reset();
+
+    }
+
+};
+
+
+//Display image of the player and score
+
 Player.prototype.render = function() {
-    
-	
-	ctx.drawImage(Resources.get("images/Door Tall Closed.png"), this.doorX, this.doorY);
-	if (life.number >0){
-	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-	ctx.font = '18px Georgia';
-    ctx.fillText('Level: ' + this.level + '  Score: ' + this.score, 300, 30);
-	}
-	else if(life.number <= 0){
-	
-	  console.log(this.number);
-	  ctx.clearRect(0, 0, 300, 30);
-      ctx.font = 'Bold 16px Verdana';
-      ctx.fillText('Game Over. Score: ' + this.score, 300, 30);
-	  
-	}
-	
-	//When player acquires the last gem(and score is 3 cause all gems must be acquired), add the image of key to the player image
-	if(this.tab === 3){
-	ctx.drawImage(Resources.get("images/Key-Small.png"), this.x+30, this.y+90);
-	
 
-	
-	}
-	
-	if(this.tab === 3 && (player.x === this.doorX && player.y === this.doorY)){
-	this.x = 0;
-	this.y = 397;
-	this.level++;
-	ctx.drawImage(Resources.get("images/Key-Small.png"), -101, -101);
-	
-    this.tab=0;
-	
-	}	
-	
 
-	
-}
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.font = '18px Georgia';
+    ctx.fillText('Score: ' + this.score, 700, 30);
 
+    //Display image of the key when player collects all the prizes
+    if (this.tab === 7) {
+        ctx.drawImage(Resources.get("images/Key-Small.png"), this.x + 30, this.y + 90);
+    }
+
+};
+
+//Function to reset the player upon losing a life/collision with the enemy bug/reaching water blocks
 Player.prototype.reset = function() {
 
-	this.x = 0;
-	this.y = 397;
-	
-}
+    this.x = PLAYER_X;
+    this.y = PLAYER_Y;
+
+};
 
 
+//Function for player's movement upon keypress
+Player.prototype.handleInput = function(key) {
 
-Player.prototype.handleInput = function(num) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-	
-	//switch and if statements to ensure player does not fall off the game
-    switch(num) {
+    switch (key) {
         case 'left':
-            if(this.x > 0)
-            this.x-=100;
+            if (this.x > 0)
+                this.x -= 100;
             break;
         case 'up':
-            if(this.y > 0)
-            this.y-=83;
+            if (this.y > 0)
+                this.y -= 83;
             break;
         case 'right':
-            if(this.x < 400)
-            this.x+=100;
+            if (this.x < 800)
+                this.x += 100;
             break;
         case 'down':
-            if(this.y < 400)
-            this.y+=83;
+            if (this.y < 383)
+                this.y += 83;
+            break;
+            /*
+		  Upon pressing spacebar, game is reset.
+          Therefore, score, tab and life number are reset 
+          to their original values.		  
+		*/
+        case 'spacebar':
+            life.number = 3;
+            player.score = 0;
+            player.tab = 0;
+            player.reset();
             break;
         default:
             return;
     }
-}
+};
 
 
 //Life class to track number of hearts
