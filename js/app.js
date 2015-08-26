@@ -1,7 +1,6 @@
 //Declare all variables that are going to be constant and hence, immutable.
 var X_OFFSET = 15,
     Y_OFFSET = 83,
-    PRIZE_X_ARRAY = [115, 215, 315, 415, 615, 715, 815],
     HIDE = -101,
     Y_ARRAY = [65, 148, 231, 314],
     PLAYER_X = 400,
@@ -32,8 +31,8 @@ Enemy.prototype.update = function(dt) {
     this.x += this.speed * dt;
 
     /*Once the bugs cross a particular threshold(x-coord > 705), 
-	  replace their image and reverse their direction of movement.
-	*/
+      replace their image and reverse their direction of movement.
+    */
     if (this.x > 705) {
 
         this.sprite = 'images/enemy-bug-left.png';
@@ -77,7 +76,7 @@ Player.prototype.update = function(dt) {
 
     this.sprite = window.myAvatar;
     //When the player and enemy-bugs collide, the player is reset and a life is lost
-    for (i in allEnemies) {
+    for (var i in allEnemies) {
         if ((this.x < allEnemies[i].x + 50 && this.y < allEnemies[i].y + 50) && (this.x + 50 > allEnemies[i].x && this.y + 50 > allEnemies[i].y)) {
             life.die();
             player.reset();
@@ -86,10 +85,10 @@ Player.prototype.update = function(dt) {
 
 
     /*
-	When the player collects a gift/prize, call function gatherPrize.
+    When the player collects a gift/prize, call function gatherPrize.
     @param {number} this.x: X Coordinate of player.
-	@param {number} this.y: Y Coordinate of player.
-	*/
+    @param {number} this.y: Y Coordinate of player.
+    */
     allPrizes.forEach(function(prize) {
         prize.gatherPrize(player.x, player.y);
     });
@@ -133,31 +132,28 @@ Player.prototype.reset = function() {
 //Function for player's movement upon keypress
 Player.prototype.handleInput = function(key) {
 
-        if(key === 'left' && this.x > 0){
-                this.x -= 100;
-		}
-        else if(key === 'up' && this.y > 0){
-                this.y -= 83;
-		}
-        else if(key === 'right' && this.x < 800){
-                this.x += 100;
-		}
-        else if(key === 'down' && this.y < 383){
-                this.y += 83;
-		}
-        /*
-		  Upon pressing spacebar, game is reset.
+    if (key === 'left' && this.x > 0) {
+        this.x -= 100;
+    } else if (key === 'up' && this.y > 0) {
+        this.y -= 83;
+    } else if (key === 'right' && this.x < 800) {
+        this.x += 100;
+    } else if (key === 'down' && this.y < 383) {
+        this.y += 83;
+    }
+    /*
+          Upon pressing spacebar, game is reset.
           Therefore, score, tab and life number are reset 
-          to their original values.		  
-		*/
-        else if(key === 'spacebar'){
-		    window.location.reload()
-            life.number = 3;
-            player.score = 0;
-            player.tab = 0;
-            player.reset();
-        }
-    
+          to their original values.       
+        */
+    else if (key === 'spacebar') {
+        window.location.reload();
+        life.number = 3;
+        player.score = 0;
+        player.tab = 0;
+        player.reset();
+    }
+
 };
 
 //Life class. Displays and tracks number of hearts/lives
@@ -169,7 +165,7 @@ var Life = function() {
 //Draw the 3 hearts
 Life.prototype.render = function() {
 
-    for (x = 0; x < this.number; x++) {
+    for (var x = 0; x < this.number; x++) {
         ctx.drawImage(Resources.get('images/Heart.png'), x * 45, 0, 50, 50);
     }
 
@@ -221,10 +217,10 @@ Prize.prototype.render = function() {
 Prize.prototype.gatherPrize = function(playerX, playerY) {
 
     /*
-	The offset values are used to adjust the image of the prizes in accordance
-	with the dimensions of the player image as both the image's height and
-	width vary.
-	*/
+    The offset values are used to adjust the image of the prizes in accordance
+    with the dimensions of the player image as both the image's height and
+    width vary.
+    */
     if (((playerX + X_OFFSET) === this.x) && ((playerY + Y_OFFSET) === this.y)) {
         this.x = HIDE;
         this.y = HIDE;
@@ -244,7 +240,7 @@ var gameOver = function() {
     ctx.fillText('Game Over :(', 100, 250);
     ctx.font = 'Bold 35px Verdana';
     ctx.fillText('Score: 0', 100, 350);
-	ctx.fillText('Press space to play again',100,450);
+    ctx.fillText('Press space to play again', 100, 450);
 };
 
 //Function to finish the game and display congrats message
@@ -255,7 +251,7 @@ var gameFinish = function() {
     ctx.fillText('Congrats, You are now a front end ninja', 100, 250);
     ctx.font = 'Bold 30px Verdana';
     ctx.fillText('Score: 0' + player.score, 100, 350);
-	ctx.fillText('Press space to play again',100,450);
+    ctx.fillText('Press space to play again', 100, 450);
 
 };
 
@@ -263,11 +259,10 @@ var gameFinish = function() {
 
 //Instantiate player, enemy, life and prizes objects
 
-var enemy1 = new Enemy();
-var enemy2 = new Enemy();
-var enemy3 = new Enemy();
-var enemy4 = new Enemy();
-var allEnemies = [enemy1, enemy2, enemy3, enemy4];
+var allEnemies = [];
+for(var i=0; i<4; i++){
+allEnemies.push(new Enemy());
+}
 
 var player = new Player();
 var life = new Life();
