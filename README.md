@@ -1,6 +1,8 @@
 # Arcade_game
 Game rules:
 
+To start the game, double click the avatar of your choice. 
+
 If the player collides with any of the enemy bugs or reaches the water block, a life will be lost. 
 
 To complete the game, the player must collect all the prizes. Once the player collects all the prizes,
