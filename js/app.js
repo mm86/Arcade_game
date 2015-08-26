@@ -150,12 +150,13 @@ Player.prototype.handleInput = function(key) {
             if (this.y < 383)
                 this.y += 83;
             break;
-            /*
+        /*
 		  Upon pressing spacebar, game is reset.
           Therefore, score, tab and life number are reset 
           to their original values.		  
 		*/
         case 'spacebar':
+		    window.location.reload()
             life.number = 3;
             player.score = 0;
             player.tab = 0;
