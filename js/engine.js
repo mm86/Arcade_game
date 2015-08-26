@@ -32,8 +32,6 @@ var Engine = (function(global) {
     document.getElementById('game').appendChild(canvas);
   
 		
-		
-		
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
      */
@@ -83,11 +81,7 @@ var Engine = (function(global) {
         avatars.parentNode.removeChild(avatars);
 		
 		});
-  
-	
-		
-		
-		}
+    	}
 
     /* This function is called by main (our game loop) and itself calls all
      * of the functions which may need to update entity's data. Based on how
