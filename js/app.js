@@ -133,38 +133,31 @@ Player.prototype.reset = function() {
 //Function for player's movement upon keypress
 Player.prototype.handleInput = function(key) {
 
-    switch (key) {
-        case 'left':
-            if (this.x > 0)
+        if(key === 'left' && this.x > 0){
                 this.x -= 100;
-            break;
-        case 'up':
-            if (this.y > 0)
+		}
+        else if(key === 'up' && this.y > 0){
                 this.y -= 83;
-            break;
-        case 'right':
-            if (this.x < 800)
+		}
+        else if(key === 'right' && this.x < 800){
                 this.x += 100;
-            break;
-        case 'down':
-            if (this.y < 383)
+		}
+        else if(key === 'down' && this.y < 383){
                 this.y += 83;
-            break;
+		}
         /*
 		  Upon pressing spacebar, game is reset.
           Therefore, score, tab and life number are reset 
           to their original values.		  
 		*/
-        case 'spacebar':
+        else if(key === 'spacebar'){
 		    window.location.reload()
             life.number = 3;
             player.score = 0;
             player.tab = 0;
             player.reset();
-            break;
-        default:
-            return;
-    }
+        }
+    
 };
 
 //Life class. Displays and tracks number of hearts/lives
